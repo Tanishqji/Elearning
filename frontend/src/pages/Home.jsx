@@ -92,7 +92,7 @@ const Home = () => {
         try {
             const { data } = await createOrder(token);
             const options = {
-                key: 'rzp_test_replace_me',
+                key: 'rzp_test_SaZVCkQkNdE6sJ',
                 amount: data.amount,
                 currency: data.currency,
                 name: 'E-Kitabein Premium',
@@ -127,11 +127,28 @@ const Home = () => {
                         <label htmlFor="search-box" className="fas fa-search"></label>
                     </form>
                     <div className="icons" style={{display: 'flex', alignItems: 'center'}}>
+                        {(!user || !user.isSubscribed) && (
+                            <button 
+                                onClick={() => {
+                                    const token = localStorage.getItem('token');
+                                    if (!token) {
+                                        alert('Please log in first to purchase a subscription!');
+                                        navigate('/login');
+                                    } else {
+                                        handlePayment(token);
+                                    }
+                                }} 
+                                className="btn" 
+                                style={{marginTop: 0, padding: '0.5rem 1.5rem', marginRight: '1rem', backgroundColor: '#e74c3c'}}
+                            >
+                                Buy Subscription
+                            </button>
+                        )}
                         <div id="search-btn" className="fas fa-search"></div>
                         <a href="#" className="fas fa-heart"></a>
                         {user ? (
                             <div style={{ marginLeft: '1.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ fontSize: '1.5rem', color: '#666' }}>{user.username}</span>
+                                <span style={{ fontSize: '1.5rem', color: '#666' }}>{user.username} {user.isSubscribed && '👑'}</span>
                                 {user.role === 'admin' && <button onClick={() => navigate('/admin')} style={{fontSize: '1.5rem', cursor: 'pointer', background: 'none'}}>Admin</button>}
                                 <button onClick={logout} style={{fontSize: '1.5rem', cursor: 'pointer', background: 'none'}}>Logout</button>
                             </div>
@@ -145,8 +162,6 @@ const Home = () => {
                         <a href="#home">Home</a>
                         <a href="#featured">Featured</a>
                         <a href="#arrivals">Arrivals</a>
-                        <a href="#reviews">Reviews</a>
-                        <a href="#blogs">Blogs</a>
                     </nav>
                 </div>
             </header>
@@ -156,8 +171,6 @@ const Home = () => {
                 <a href="#home" className="fas fa-home"></a>
                 <a href="#featured" className="fas fa-list"></a>
                 <a href="#arrivals" className="fas fa-tags"></a>
-                <a href="#reviews" className="fas fa-comments"></a>
-                <a href="#blogs" className="fas fa-blog"></a>
             </nav>
 
             {/* Home Section */}
@@ -308,7 +321,7 @@ const Home = () => {
 
             {/* Footer */}
             <section className="footer">
-                <div className="box-container">
+                <div className="box-container" style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
                     <div className="box">
                         <h3>our locations</h3>
                         <p><i className="fas fa-map-marker-alt"></i> Indore</p>
@@ -318,15 +331,6 @@ const Home = () => {
                         <a href="#"> <i className="fas fa-arrow-right"></i> Home </a>
                         <a href="#"> <i className="fas fa-arrow-right"></i> Featured </a>
                         <a href="#"> <i className="fas fa-arrow-right"></i> Arrivals </a>
-                        <a href="#"> <i className="fas fa-arrow-right"></i> Reviews </a>
-                        <a href="#"> <i className="fas fa-arrow-right"></i> Blogs </a>
-                    </div>
-                    <div className="box">
-                        <h3>extra links</h3>
-                        <a href="#"> <i className="fas fa-arrow-right"></i> Account info </a>
-                        <a href="#"> <i className="fas fa-arrow-right"></i> Privacy policy </a>
-                        <a href="#"> <i className="fas fa-arrow-right"></i> Payment method </a>
-                        <a href="#"> <i className="fas fa-arrow-right"></i> Our serivces </a>
                     </div>
                 </div>
                 <div className="credit" style={{ textAlign: 'center', padding: '2rem 0', fontSize: '1.5rem', color: '#666', borderTop: '1px solid #ccc', marginTop: '2rem' }}> 
